@@ -1,6 +1,6 @@
 # ionic-locate-demo
 
-Test successful on ios platform.
+Test successfully on ios platform.
 
 ## 1. get current location coordinates info
 
