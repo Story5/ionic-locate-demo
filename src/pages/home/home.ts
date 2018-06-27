@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SxLocationHelperProvider } from '../../providers/sx-location-helper/sx-location-helper';
 import { GeolocationOptions, Geoposition } from '@ionic-native/geolocation';
+import { NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,12 @@ import { GeolocationOptions, Geoposition } from '@ionic-native/geolocation';
 })
 export class HomePage {
 
-  locationInfo:Array<any> = [];
+  coordinates: Coordinates;
+  locationInfo: Array<any> = [];
+  located: boolean = false;
+
+  reversed:boolean = false;
+  addressInfo:Array<any> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -33,16 +39,40 @@ export class HomePage {
       console.log("timestamp:", timestamp);
       console.log("coords:", JSON.stringify(coords));
 
+      this.coordinates = coords;
+      var array = [];
       for (const key in coords) {
         if (coords.hasOwnProperty(key)) {
           const element = coords[key];
-          this.locationInfo.push([key,element]);
+          array.push([key,element]);
         }
       }
-      
+      this.locationInfo = array;
+      this.located = true;
     }).catch(error=>{
       console.error(JSON.stringify(error));
     });
+  }
+
+  geocoding() {
+    this.sxlocationhelper.reverseGeocode(this.coordinates.latitude, this.coordinates.longitude)
+    .then((results: NativeGeocoderReverseResult[]) => {
+      let result = results[0];
+
+      
+      var array = [];
+      for (const key in result) {
+        if (result.hasOwnProperty(key)) {
+          const element = result[key];
+          array.push([key, element]);
+        }
+      }
+      this.addressInfo = array;
+      this.reversed = true;
+      
+    }).catch(error => {
+      console.error(JSON.stringify(error));
+    })
   }
 
 }

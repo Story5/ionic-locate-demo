@@ -12,11 +12,29 @@
     开始定位
   </button>
 
-  <ion-grid *ngIf="locationInfo">
-    <ion-row *ngFor="let dic of locationInfo">
-      <ion-col *ngFor="let item of dic">
-        {{item}}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div  *ngIf="located">
+    <ion-grid>
+      <ion-row *ngFor="let dic of locationInfo">
+        <ion-col *ngFor="let item of dic">
+          {{item}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button block color="primary" (click)="geocoding()" ion-left>
+      <ion-icon name="swap"></ion-icon>
+       开始逆地理编码
+    </button>
+  </div>
+
+  <div *ngIf="reversed">
+    <ion-grid>
+      <ion-row *ngFor="let dic of addressInfo">
+        <ion-col *ngFor="let item of dic">
+          {{item}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>
