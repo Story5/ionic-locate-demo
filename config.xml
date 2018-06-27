@@ -88,4 +88,5 @@
     </edit-config>
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <engine name="ios" spec="4.5.4" />
 </widget>

@@ -11,5 +11,12 @@
     <ion-icon name="navigate"></ion-icon>
     开始定位
   </button>
-  <div id="output"></div>
+
+  <ion-grid *ngIf="locationInfo">
+    <ion-row *ngFor="let dic of locationInfo">
+      <ion-col *ngFor="let item of dic">
+        {{item}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

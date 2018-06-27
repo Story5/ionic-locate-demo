@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { SxLocationHelperProvider } from '../providers/sx-location-helper/sx-location-helper';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomePage } from '../pages/home/home';
     StatusBar,
     SplashScreen,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SxLocationHelperProvider
   ]
 })
 export class AppModule {}
