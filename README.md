@@ -1,5 +1,7 @@
 # ionic-locate-demo
 
+Test successful on ios platform.
+
 ## 1. get current location coordinates info
 
 Using [Geolocation](https://ionicframework.com/docs/native/geolocation/) plugin to get the coordinates info
