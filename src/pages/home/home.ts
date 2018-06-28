@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { SxLocationHelperProvider } from '../../providers/sx-location-helper/sx-location-helper';
 import { GeolocationOptions, Geoposition } from '@ionic-native/geolocation';
 import { NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
@@ -10,6 +10,7 @@ import { NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 })
 export class HomePage {
 
+  timestamp : number;
   coordinates: Coordinates;
   locationInfo: Array<any> = [];
   located: boolean = false;
@@ -18,6 +19,7 @@ export class HomePage {
   addressInfo:Array<any> = [];
 
   constructor(
+    public platform:Platform,
     public navCtrl: NavController,
     public sxlocationhelper:SxLocationHelperProvider
   ) {
@@ -26,35 +28,41 @@ export class HomePage {
 
   startLocate() {
     console.log("startLocate");
+    this.located = false;
+    this.reversed = false;
     this.getCurrentPosition();
   }
 
   getCurrentPosition() {
-    let options: GeolocationOptions = {
-      enableHighAccuracy : false
-    };
-    this.sxlocationhelper.getCurrentPosition(options).then((geoposition: Geoposition)=>{
-      let timestamp: number = geoposition.timestamp;
-      let coords: Coordinates = geoposition.coords;
-      console.log("timestamp:", timestamp);
-      console.log("coords:", JSON.stringify(coords));
+    this.platform.ready().then(()=>{
+      let options: GeolocationOptions = {
+        enableHighAccuracy: false
+      };
+      this.sxlocationhelper.getCurrentPosition(options).then((geoposition: Geoposition) => {
+        this.timestamp = geoposition.timestamp;
+        this.coordinates = geoposition.coords;
+        console.log("timestamp:", this.timestamp);
+        console.log("coords:", JSON.stringify(this.coordinates));
+        
 
-      this.coordinates = coords;
-      var array = [];
-      for (const key in coords) {
-        if (coords.hasOwnProperty(key)) {
-          const element = coords[key];
-          array.push([key,element]);
+        var array = [];
+        for (const key in this.coordinates) {
+          const element = this.coordinates[key];
+          if (element != null) {
+            array.push([key, element]);
+          }
         }
-      }
-      this.locationInfo = array;
-      this.located = true;
-    }).catch(error=>{
-      console.error(JSON.stringify(error));
-    });
+        this.locationInfo = array;
+        this.located = true;
+      }).catch(error => {
+        console.error(JSON.stringify(error));
+      });
+    })
   }
 
   geocoding() {
+    this.reversed = false;
+    
     this.sxlocationhelper.reverseGeocode(this.coordinates.latitude, this.coordinates.longitude)
     .then((results: NativeGeocoderReverseResult[]) => {
       let result = results[0];
@@ -62,8 +70,8 @@ export class HomePage {
       
       var array = [];
       for (const key in result) {
-        if (result.hasOwnProperty(key)) {
-          const element = result[key];
+        const element = result[key];
+        if (element != null) {
           array.push([key, element]);
         }
       }

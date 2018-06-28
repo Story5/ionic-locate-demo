@@ -93,6 +93,7 @@
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="Use geocoder service" />
     </plugin>
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.1" />
+    <allow-navigation href="http://192.168.0.19:8100" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.0.0" />
 </widget>

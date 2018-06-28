@@ -14,6 +14,10 @@
 
   <div  *ngIf="located">
     <ion-grid>
+      <ion-row>
+        <ion-col>timestamp</ion-col>
+        <ion-col>{{this.timestamp}}</ion-col>
+      </ion-row>
       <ion-row *ngFor="let dic of locationInfo">
         <ion-col *ngFor="let item of dic">
           {{item}}
@@ -29,6 +33,10 @@
 
   <div *ngIf="reversed">
     <ion-grid>
+      <ion-row>
+        <ion-col>timestamp</ion-col>
+        <ion-col>{{this.timestamp | date:"yyyy-MM-dd HH:mm:ss" }}</ion-col>
+      </ion-row>
       <ion-row *ngFor="let dic of addressInfo">
         <ion-col *ngFor="let item of dic">
           {{item}}
