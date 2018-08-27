@@ -1,5 +1,7 @@
 # ionic-locate-demo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Story5/ionic-get-location-demo.svg)](https://greenkeeper.io/)
+
 Test successfully on ios and android device.
 
 ## 1. get current location coordinates info
